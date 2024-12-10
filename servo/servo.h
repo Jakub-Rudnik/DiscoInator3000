@@ -8,7 +8,8 @@ void setupServo() {
 }
 
 void SpinServo() {
-  myServo.write(95); 
+  myServo.write(80); 
+  
 }
 void StopServo() {
   myServo.write(90); 

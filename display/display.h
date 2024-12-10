@@ -1,7 +1,7 @@
 #pragma once
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
-#include "bitmap_anime_booba.h"
+#include "bitmap_test.h"
 #include "bitmap_doofenshmirtz_jazz.h"
 #include "bitmap_doofenshmirtz_cool.h"
 
@@ -17,9 +17,9 @@ void setupDisplay() {
   tft.fillScreen(ST77XX_BLACK);  
 }
 
-void DrawBooba() {
+void DrawTest() {
   // Draw the bitmap at (0, 0) position
-  tft.drawRGBBitmap(0, 0, bitmap_anime_booba, 128, 160);
+  tft.drawRGBBitmap(0, 0, bitmap_test, 128, 160);
 }
 
 void DrawJazz() {

@@ -7,4 +7,7 @@
 #define TFT_BL     7 // backlight control
 
 // Continuous servo FS90R pinout
-#define SERVO_PIN  6 // servo control
+#define SERVO_PIN  6 
+
+// Iduino sound sensor
+#define SOUND_PIN A0
