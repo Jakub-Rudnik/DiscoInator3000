@@ -1,7 +1,9 @@
 #pragma once
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
-#include "doofenshmirtz.h"
+#include "bitmap_anime_booba.h"
+#include "bitmap_doofenshmirtz_jazz.h"
+#include "bitmap_doofenshmirtz_cool.h"
 
 // Create the display object
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
@@ -17,6 +19,16 @@ void setupDisplay() {
 
 void DrawBooba() {
   // Draw the bitmap at (0, 0) position
-  tft.drawRGBBitmap(0, 0, epd_bitmap_anime_booba, 128, 160);
+  tft.drawRGBBitmap(0, 0, bitmap_anime_booba, 128, 160);
+}
+
+void DrawJazz() {
+  // Draw the bitmap at (0, 0) position
+  tft.drawRGBBitmap(0, 0, bitmap_doofenshmirtz_jazz, 128, 160);
+}
+
+void DrawCool() {
+  // Draw the bitmap at (0, 0) position
+  tft.drawRGBBitmap(0, 0, bitmap_doofenshmirtz_cool, 128, 160);
 }
 

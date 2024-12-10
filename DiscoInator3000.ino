@@ -4,8 +4,8 @@
 
 void setup() {
   setupDisplay();
-  DrawBooba();
-  
+  DrawCool();
+
   setupServo();
   SpinServo();
   delay(1000);
