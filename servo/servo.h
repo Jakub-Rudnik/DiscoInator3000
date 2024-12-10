@@ -1,13 +1,16 @@
-#include "pinout.h"
+#pragma once
 #include <Servo.h>
 
 Servo myServo; // Obiekt serwa
 
-void setup() {
+void setupServo() {
   myServo.attach(SERVO_PIN); // Podłącz serwo do pinu cyfrowego 9
-  myServo.write(95);
 }
 
-void loop() {
-  
+void SpinServo() {
+  myServo.write(95); 
 }
+void StopServo() {
+  myServo.write(90); 
+}
+
