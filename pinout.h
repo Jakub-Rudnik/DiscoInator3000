@@ -11,3 +11,6 @@
 
 // Iduino sound sensor
 #define SOUND_PIN A0
+
+// Diodes
+#define PINK_DIODE 12

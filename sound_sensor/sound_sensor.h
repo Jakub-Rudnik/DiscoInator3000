@@ -1,8 +1,8 @@
 int soundVal = 0;
 unsigned long lastClapTime = 0;
-bool clapMode = true;
+bool clapMode = 0;
 
-void loopSoundSensor() {
+void UpdateSoundSensor() {
   soundVal = analogRead(SOUND_PIN);  
   unsigned long currentTime = millis();
   if (soundVal > 100 && currentTime - lastClapTime > 300) {
