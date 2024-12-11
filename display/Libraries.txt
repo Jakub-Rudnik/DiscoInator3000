@@ -1,0 +1,33 @@
+LedControl (obsługuje efekty świetlne):
+
+    void begin(): Inicjalizacja diod LED.
+    void setInitialPattern(): Ustawienie początkowego wzorca migania.
+    void adjustPattern(float temperature, int noiseLevel): Zmiana wzorca migania w zależności od temperatury i hałasu.
+    void updateRegularMode(): Aktualizacja efektów w trybie początkowym.
+    void updateVixaMode(): Dynamiczne miganie w trybie "Vixa".
+
+
+SoundControl (steruje buzzerem):
+
+    void begin(): Inicjalizacja buzzera.
+    void playStartupSound(): Odtwarzanie wstępnej melodii.
+    void updateRegularSound(): Melodia w trybie początkowym.
+    void updateVixaSound(): Żywsza melodia w trybie "Vixa".
+
+
+DisplayManager (obsługuje wyświetlacze OLED i LCD):
+
+    void begin(): Inicjalizacja wyświetlaczy.
+    void showStartupScreen(const char* name): Wyświetlenie nazwy urządzenia na OLED.
+    void showDooferschmitz(bool isVixaMode): Wyświetlenie dundersztyca na LCD w zależnosci od trybu.
+
+
+SensorHandler (obsługuje czujniki):
+
+    void begin(int tempPin, int soundPin): Inicjalizacja czujników.
+    float getTemperature(): Odczyt temperatury.
+    int getNoiseLevel(): Odczyt poziomu hałasu.
+    ModeManager (zarządza trybami):
+
+void begin(): Inicjalizacja modułu zarządzania trybami.
+void switchMode(int mode, LedControl& ledCtrl, SoundControl& soundCtrl, DisplayManager& dispMgr): Przełączanie między trybem początkowym a "Vixa".
