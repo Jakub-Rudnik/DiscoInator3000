@@ -12,9 +12,13 @@
 // Iduino sound sensor
 #define SOUND_PIN A0
 
-// Diodes
+// Diodes/
 #define PINK_DIODE 12
+#define ORANGE_DIODE 5
 
 // OLED
 #define OLED_SDA A4
 #define OLED_SCL A5
+
+// Vixa Mode
+#define VIXA_PIN 4; 
