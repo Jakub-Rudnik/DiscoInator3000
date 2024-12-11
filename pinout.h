@@ -14,3 +14,7 @@
 
 // Diodes
 #define PINK_DIODE 12
+
+// OLED
+#define OLED_SDA A4
+#define OLED_SCL A5
