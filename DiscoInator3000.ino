@@ -5,6 +5,7 @@
 #include "sound_sensor/sound_sensor.h" // zmienna clapMode zmienia stan po klasnieciu 
 #include "OLED/oled.h"
 #include "LED/LED.h"
+#include "potentiometer/potentiometer.h"
 
 #include "main_logic.h"
 
@@ -15,11 +16,11 @@ void setup() {
   setupOLED();
   setupLogic();
   setupLED();
+  setupPot();
 }
 
 void loop() {
   UpdateSoundSensor();
-  
   UpdateParty();
-  UpdateLED(partyMode, );
+  UpdateLED(partyMode, ReadPot());
 }

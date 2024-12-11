@@ -21,4 +21,7 @@
 #define OLED_SCL A5
 
 // Vixa Mode
-#define VIXA_PIN 4; 
+#define VIXA_PIN 4
+
+// POTENTIOMETER
+#define POT_PIN A3
