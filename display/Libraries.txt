@@ -29,5 +29,11 @@ SensorHandler (obsługuje czujniki):
     int getNoiseLevel(): Odczyt poziomu hałasu.
     ModeManager (zarządza trybami):
 
+servo (obsługuje mechanizm obracania kuli disco)
+
+    begin(int servoPin): Konfiguruje serwomechanizm do pracy, ustawia go na początkową pozycję.
+    rotateDiscoBall(): Obraca kulę disco w dynamicznym ruchu.
+    stopDiscoBall(): Zatrzymuje obrót serwomechanizmu
+
 void begin(): Inicjalizacja modułu zarządzania trybami.
 void switchMode(int mode, LedControl& ledCtrl, SoundControl& soundCtrl, DisplayManager& dispMgr): Przełączanie między trybem początkowym a "Vixa".

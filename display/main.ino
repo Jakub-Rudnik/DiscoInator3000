@@ -4,11 +4,13 @@
 #include "DisplayManager.h"
 #include "SensorHandler.h"
 #include "ModeManager.h"
+#include "servo.h" 
 
 // Piny
-const int buttonPin = 7;          // Pin przycisku trybu "Vixa"
-const int temperatureSensorPin = A1; // Pin czujnika temperatury
-const int soundSensorPin = A2;    // Pin czujnika dźwięku
+const int buttonPin = ;          // Pin przycisku trybu "Vixa"
+const int temperatureSensorPin = ; // Pin czujnika temperatury
+const int soundSensorPin = ;    // Pin czujnika dźwięku
+const int discoBallServoPin = ;  // Pin serwomechanizmu kuli disco
 
 // Zmienne globalne
 int currentMode = 0; // 0 - Tryb początkowy, 1 - Tryb "Vixa"
@@ -19,11 +21,13 @@ unsigned long lastLedUpdateTime = 0;
 unsigned long lastSoundUpdateTime = 0;
 unsigned long debounceDelay = 50;    // Opóźnienie dla debounce przycisku
 unsigned long lastButtonPressTime = 0;
+unsigned long lastDiscoBallUpdateTime = 0;
 
 // Czasy aktualizacji
 const unsigned long sensorUpdateInterval = 100;  // Częstotliwość odczytu czujników (ms)
 const unsigned long ledUpdateInterval = 50;      // Częstotliwość aktualizacji LED (ms)
 const unsigned long soundUpdateInterval = 200;   // Częstotliwość aktualizacji dźwięku (ms)
+const unsigned long discoBallUpdateInterval = 20; // Częstotliwość aktualizacji serwomechanizmu (ms)
 
 // Obiekty klas
 LedControl ledControl;
@@ -31,6 +35,7 @@ SoundControl soundControl;
 DisplayManager displayManager;
 SensorHandler sensorHandler;
 ModeManager modeManager;
+servo discoBallControl(discoBallServoPin); 
 
 void setup() {
     // Inicjalizacja pinów
@@ -42,6 +47,7 @@ void setup() {
     displayManager.begin();
     sensorHandler.begin(temperatureSensorPin, soundSensorPin);
     modeManager.begin();
+    discoBallControl.begin(); // Inicjalizacja kuli disco
 
     // Uruchomienie trybu początkowego
     displayManager.showStartupScreen("DiscoInator3000");
@@ -92,12 +98,16 @@ void loop() {
         }
     }
 
-    
+    // Obracanie kuli disco w trybie "Vixa"
+    if (currentMode == 1 && currentMillis - lastDiscoBallUpdateTime >= discoBallUpdateInterval) {
+        lastDiscoBallUpdateTime = currentMillis;
+        discoBallControl.rotateDiscoBall(); // Wywołanie funkcji z biblioteki
+    }
+
     // Wyświetlenie wizerunku DJ-a w zależności od trybu
     if (currentMode == 0) {
         displayManager.showVixaDJ(false); // Tryb normalny
     } else {
         displayManager.showVixaDJ(true);  // Tryb "Vixa"
     }
-
 }
