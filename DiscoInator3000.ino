@@ -19,7 +19,7 @@ void setup() {
 
 void loop() {
   UpdateSoundSensor();
-  UpdateLED();
-  UpdateParty();
   
+  UpdateParty();
+  UpdateLED(partyMode, );
 }
