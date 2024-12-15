@@ -4,7 +4,8 @@ bool partyMode = 0;
 int switchCount = 0;
 
 void setupLogic() {
-  partyMode = !clapMode;
+  partyMode = !clapMode; // zmienna clapMode zmienia stan po klasnieciu - zrobil thomas
+  // na start partyMode != clapMode zeby sie uruchomila funkcja UpdateParty
   pinMode(VIXA_PIN, OUTPUT);
 }
 
@@ -13,7 +14,7 @@ void StartParty() {
   DisplayText("DISCO\nINATOR\n3000");
   DrawCool();
   SpinServo();
-  digitalWrite(VIXA_PIN, HIGH);
+  digitalWrite(VIXA_PIN, HIGH); // wyjscie do kuby
 }
 
 void StopParty() {
