@@ -1,7 +1,3 @@
-// waveshare 1.8" LCD pinout
-#define TFT_CLK    13 // clock
-#define TFT_DIN    11 // data in
-#define TFT_CS     10 // chip select
-#define TFT_DC     9 // data/command select
-#define TFT_RST    8 // reset
-#define TFT_BL     7 // backlight control
+uint8_t BUZZER_PIN = 5;
+uint8_t SECOND_BUZZER_PIN = 18;
+uint8_t MODE_PIN = 34;
