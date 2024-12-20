@@ -18,6 +18,8 @@ int dofenschmirtzNoteDurations[] = {
   6, 6, 8, 16, 4, 16, 2
 };
 
+int dofenschmirtzSongDuration = 110;
+
 int lickMelody[] = {
   NOTE_A3, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_F4,
   REST, NOTE_C4, NOTE_D4, REST
