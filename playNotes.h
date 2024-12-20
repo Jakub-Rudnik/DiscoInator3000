@@ -23,3 +23,4 @@ void playTwoNotes(int pin1, int freq1, int pin2, int freq2, int duration) {
     }
   }
 }
+
