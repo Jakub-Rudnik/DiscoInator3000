@@ -50,7 +50,7 @@ void setup()
   // server.begin();
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(SECOND_BUZZER_PIN, OUTPUT);
-  pinMode(MODE_PIN, INPUT);
+  pinMode(MODE_PIN, INPUT_PULLDOWN);
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
   { // Address 0x3D for 128x64
@@ -88,10 +88,7 @@ void loop()
 
       playTwoNotes(BUZZER_PIN, lickMelody[i], SECOND_BUZZER_PIN, lickMelody[i] * 1.5, noteDuration);
     }
-  }
-
-  if (digitalRead(MODE_PIN) == HIGH)
-  {
+  } else {
     display.clearDisplay();
     display.setTextSize(1);
     display.setCursor(0, 0);
