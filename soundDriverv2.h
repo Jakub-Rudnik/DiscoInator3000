@@ -2,8 +2,8 @@ int musicLength = 15;
 
 int timeUnitForMusic = 20;
 
-int halfPeriod1 = 100;
-int halfPeriod2 = 100;
+int halfPeriod1 = 4000;
+int halfPeriod2 = 4000;
 unsigned long long  nextNoteTime1 = 0;
 unsigned long long  nextNoteTime2 = 0;
 int noteIndex1 = 0;
@@ -29,7 +29,7 @@ int buzzerState1 = 0;
 int buzzerState2 = 0;
 
 void updateBuzzers() {
-  unsigned long long currentTime = micros();
+  unsigned long currentTime = micros();
   if (currentTime - lastTime1 >= halfPeriod1) {
     digitalWrite(BUZZER_PIN, buzzerState1 ? HIGH : LOW);
     buzzerState1 = !buzzerState1;

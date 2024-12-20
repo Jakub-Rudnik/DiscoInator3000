@@ -33,19 +33,26 @@ void setup()
 
 }
 
+int lastMode = 1;
+
 void loop()
 {
-  if (digitalRead(MODE_PIN) == LOW)
+  int currentMode = digitalRead(MODE_PIN) == HIGH;
+  if (currentMode !=  lastMode)
   {
-    displayNormal();
-
-  } else {
-    displayVIXA();
-
-  }
-  //updateFreq();
+    lastMode = currentMode;
+    if (currentMode) {
+      displayVIXA();
+    }
+    else {
+      displayNormal();
+    }
+  } 
+  updateFreq();
   updateBuzzers();
 }
+
+
 
 void displayVIXA() {
   display.clearDisplay();
