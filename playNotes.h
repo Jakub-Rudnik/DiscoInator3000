@@ -1,3 +1,5 @@
+int stopPlaying = 0;
+
 void playTwoNotes(int pin1, int freq1, int pin2, int freq2, int duration) {
   unsigned long period1 = freq1 == 0 ? 0 : 1000000 / freq1;  // Okres 1
   unsigned long period2 = freq2 == 0 ? 0 : 1000000 / freq2;  // Okres 2
@@ -5,7 +7,7 @@ void playTwoNotes(int pin1, int freq1, int pin2, int freq2, int duration) {
   unsigned long halfPeriod2 = period2 / 2;
 
   unsigned long startTime = millis();
-  while (millis() - startTime < duration) {
+  while (millis() - startTime < duration && !stopPlaying) {
     // Buzzer 1
     if (freq1 > 0) {
       digitalWrite(pin1, HIGH);

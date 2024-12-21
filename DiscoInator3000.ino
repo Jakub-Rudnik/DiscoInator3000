@@ -12,6 +12,7 @@
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
+#include "utils.h"
 // const char* ssid = "UPC6874093";
 // const char* password = "Snesxj6runcf";
 
@@ -41,8 +42,11 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 //     server.send(200, "application/json", "{\"message\":\"Data received successfully\"}");
 // }
 
-void setup()
-{
+void IRAM_ATTR changeMode() {
+  stopPlaying = 1;
+}
+
+void setup() {
   Serial.begin(9600);
   // WiFi.softAP("ESP32");
   // server.on("/", handleRoot);
@@ -51,6 +55,8 @@ void setup()
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(SECOND_BUZZER_PIN, OUTPUT);
   pinMode(MODE_PIN, INPUT_PULLDOWN);
+
+  attachInterrupt(MODE_PIN, changeMode, CHANGE);
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
   { // Address 0x3D for 128x64
@@ -66,41 +72,51 @@ void setup()
   // display.print("Tryb: ");
 }
 
-void loop()
-{
+int lastMode = 1;
+void loop() {
   // if (WiFi.status() != WL_CONNECTED) {
   //   connectWiFi();
   // }
   // server.handleClient();
-  display.clearDisplay();
+  
+  switchNormalModeMelody(2);
+  switchPartyModeMelody(2);
 
-  if (digitalRead(MODE_PIN) == LOW)
+  stopPlaying = 0;
+  int currentMode = digitalRead(MODE_PIN) == HIGH;
+  
+  if (currentMode != lastMode)
   {
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setCursor(0, 0);
-    display.print("Tryb: Normlany");
-    display.display();
+    lastMode = currentMode;
 
-    for (int i = 0; i < sizeof(lickMelody) / sizeof(lickMelody[0]); i++)
-    {
-      int noteDuration = 1000 / lickNoteDurations[i];
+    if (!currentMode) {
+      displayNormal();
 
-      playTwoNotes(BUZZER_PIN, lickMelody[i], SECOND_BUZZER_PIN, lickMelody[i] * 1.5, noteDuration);
-    }
-  } else {
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setCursor(0, 0);
-    display.print("Tryb: VIXA");
-    display.display();
+      while (!stopPlaying) {
+        for (int i = 0; i < normalModeMelodyLength; i++) {
+          if (stopPlaying) break;
+          int noteDuration = 1000 / currentNormalModeNoteDurations[i];
+          playTwoNotes(BUZZER_PIN, currentNormalModeMelody[i], SECOND_BUZZER_PIN, currentNormalModeMelody[i] * 1.5, noteDuration);
+        }
+      }
+    } 
+    else {
+      displayVixa();
 
-    for (int i = 0; i < sizeof(dofenschmirtsMelody) / sizeof(dofenschmirtsMelody[0]); i++)
-    {
-      int noteDuration = 1000 / dofenschmirtzNoteDurations[i];
+      for (int i = 0; i < sizeof(dofenschmirtsMelody) / sizeof(dofenschmirtsMelody[0]); i++) {
+        if (stopPlaying) break;
+        int noteDuration = 1000 / dofenschmirtzNoteDurations[i];
+        playTwoNotes(BUZZER_PIN, dofenschmirtsMelody[i], SECOND_BUZZER_PIN, dofenschmirtsMelody[i] * 1.5, noteDuration);
+      }
 
-      playTwoNotes(BUZZER_PIN, dofenschmirtsMelody[i], SECOND_BUZZER_PIN, dofenschmirtsMelody[i] * 1.5, noteDuration);
-    }
+      while (!stopPlaying) {
+        for (int i = 0; i < partyModeMelodyLength; i++) {
+          if (stopPlaying) break;
+          int noteDuration = 1000 / currentPartyModeNoteDurations[i];
+          playTwoNotes(BUZZER_PIN, currentPartyModeMelody[i], SECOND_BUZZER_PIN, currentPartyModeMelody[i] * 1.5, noteDuration);
+        }
+      }
+    } 
   }
 }
 
