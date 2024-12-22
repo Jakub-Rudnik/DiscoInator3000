@@ -1,5 +1,4 @@
 #include "pinout.h"
-#include "playNotes.h"
 #include "melodies.h"
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -11,123 +10,139 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 #include "utils.h"
 
+uint8_t last_mode = 0;
+uint8_t current_normal_melody = 0;
+uint8_t current_party_melody = 0;
+uint8_t normal_melody_index = 0;
+uint8_t party_melody_index = 0;
+uint8_t update_display_flag = 0;
+
 void IRAM_ATTR changeMode() {
-  stopPlaying = 1;
+  stop_playing = 1;
 }
 
-uint8_t currentNormalMelody = 0;
-uint8_t i = 0;
-uint8_t ii = 0;
-uint8_t currentPartyMelody = 0;
-
 void IRAM_ATTR changeToSong1() {
-  currentNormalMelody = 0;
-  i = 0;
-  switchNormalModeMelody(currentNormalMelody);
+  current_normal_melody = 0;
+  normal_melody_index = 0;
+  switchNormalModeMelody(current_normal_melody);
+  update_display_flag = 1;  
 }
 
 void IRAM_ATTR changeToSong2() {
-  currentNormalMelody = 1;
-  i = 0;
-  switchNormalModeMelody(currentNormalMelody);
+  current_normal_melody = 1;
+  normal_melody_index = 0;
+  switchNormalModeMelody(current_normal_melody);
+  update_display_flag = 1;
 }
 
 void IRAM_ATTR changeToSong3() {
-  currentNormalMelody = 2;
-  i = 0;
-  switchNormalModeMelody(currentNormalMelody);
+  current_normal_melody = 2;
+  normal_melody_index = 0;
+  switchNormalModeMelody(current_normal_melody);
+  update_display_flag = 1;
 }
 
 void IRAM_ATTR changeToSong4() {
-  currentPartyMelody = 0;
-  ii = 0;
-  switchPartyModeMelody(currentPartyMelody);
+  current_party_melody = 0;
+  party_melody_index = 0;
+  switchPartyModeMelody(current_party_melody);
+  update_display_flag = 1;
 }
 
 void IRAM_ATTR changeToSong5() {
-  currentPartyMelody = 1;
-  ii = 0;
-  switchPartyModeMelody(currentPartyMelody);
+  current_party_melody = 1;
+  party_melody_index = 0;
+  switchPartyModeMelody(current_party_melody);
+  update_display_flag = 1;
 }
 
 void IRAM_ATTR changeToSong6() {
-  currentPartyMelody = 2;
-  ii = 0;
-  switchPartyModeMelody(currentPartyMelody);
+  current_party_melody = 2;
+  party_melody_index = 0;
+  switchPartyModeMelody(current_party_melody);
+  update_display_flag = 1;
 }
 
 void setup() {
-  Serial.begin(9600);
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(SECOND_BUZZER_PIN, OUTPUT);
   pinMode(MODE_PIN, INPUT_PULLDOWN);
-  pinMode(BTN_1, INPUT_PULLUP);
-  pinMode(BTN_2, INPUT_PULLUP);
-  pinMode(BTN_3, INPUT_PULLUP);
-  pinMode(BTN_4, INPUT_PULLUP);
-  pinMode(BTN_5, INPUT_PULLUP);
-  pinMode(BTN_6, INPUT_PULLUP);
+  pinMode(BTN_1_PIN, INPUT_PULLUP);
+  pinMode(BTN_2_PIN, INPUT_PULLUP);
+  pinMode(BTN_3_PIN, INPUT_PULLUP);
+  pinMode(BTN_4_PIN, INPUT_PULLUP);
+  pinMode(BTN_5_PIN, INPUT_PULLUP);
+  pinMode(BTN_6_PIN, INPUT_PULLUP);
 
   attachInterrupt(MODE_PIN, changeMode, CHANGE);
-  attachInterrupt(BTN_1, changeToSong1, RISING);
-  attachInterrupt(BTN_2, changeToSong2, RISING);
-  attachInterrupt(BTN_3, changeToSong3, RISING);
-  attachInterrupt(BTN_4, changeToSong4, RISING);
-  attachInterrupt(BTN_5, changeToSong5, RISING);
-  attachInterrupt(BTN_6, changeToSong6, RISING);
+  attachInterrupt(BTN_1_PIN, changeToSong1, RISING);
+  attachInterrupt(BTN_2_PIN, changeToSong2, RISING);
+  attachInterrupt(BTN_3_PIN, changeToSong3, RISING);
+  attachInterrupt(BTN_4_PIN, changeToSong4, RISING);
+  attachInterrupt(BTN_5_PIN, changeToSong5, RISING);
+  attachInterrupt(BTN_6_PIN, changeToSong6, RISING);
 
-  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
-  { // Address 0x3D for 128x64
-    Serial.println(F("SSD1306 allocation failed"));
-    for (;;)
-      ;
-  }
-
-  display.clearDisplay();
-  display.setTextColor(WHITE);
+  setupDisplay();
+  last_mode = digitalRead(MODE_PIN) == LOW;
 }
 
-int lastMode = 1;
-
 void loop() {  
-  stopPlaying = 0;
+  if (stop_playing) {
+    stop_playing = 0;
+  }
 
-  switchNormalModeMelody(currentNormalMelody);
-  switchPartyModeMelody(currentPartyMelody);
+  Serial.println(stop_playing, DEC);
 
-  int currentMode = digitalRead(MODE_PIN) == HIGH;
+  switchNormalModeMelody(current_normal_melody);
+  switchPartyModeMelody(current_party_melody);
+
+  uint8_t current_mode = digitalRead(MODE_PIN) == HIGH;
   
-  if (currentMode != lastMode)
+  if (current_mode != last_mode)
   {
-    lastMode = currentMode;
+    last_mode = current_mode;
 
-    if (!currentMode) {
-      displayNormal();
+    if (!current_mode) {
+      displayNormal(current_normal_melody);
 
-      while (!stopPlaying) {
-        for (i = 0; i < normalModeMelodyLength; i++) {
-          if (stopPlaying) break;
-          int noteDuration = 1000 / currentNormalModeNoteDurations[i];
-          playTwoNotes(BUZZER_PIN, currentNormalModeMelody[i], SECOND_BUZZER_PIN, currentNormalModeMelody[i] * 1.5, noteDuration);
+      while (!stop_playing) {
+        for (normal_melody_index = 0; normal_melody_index < normal_mode_melody_length; normal_melody_index++) {
+          if (stop_playing) break;
+
+          if (update_display_flag) {
+            update_display_flag = 0;
+            displayCurrentSongId(current_normal_melody);
+          }
+
+          int note_duration = 1000 / current_normal_mode_note_durations[normal_melody_index];
+          playTwoNotes(BUZZER_PIN, current_normal_mode_melody[normal_melody_index], SECOND_BUZZER_PIN, current_normal_mode_melody[normal_melody_index] * 1.5, note_duration);
         }
       }
     } 
     else {
-      displayVixa();
+      displayParty(current_party_melody);
 
-      for (int i = 0; i < sizeof(dofenschmirtsMelody) / sizeof(dofenschmirtsMelody[0]); i++) {
-        if (stopPlaying) break;
-        int noteDuration = 1000 / dofenschmirtzNoteDurations[i];
-        playTwoNotes(BUZZER_PIN, dofenschmirtsMelody[i], SECOND_BUZZER_PIN, dofenschmirtsMelody[i] * 1.5, noteDuration);
+      for (int i = 0; i < sizeof(dofenschmirtz_melody) / sizeof(dofenschmirtz_melody[0]); i++) {
+        if (stop_playing) break;
+        int note_duration = 1000 / dofenschmirtz_note_durations[i];
+        playTwoNotes(BUZZER_PIN, dofenschmirtz_melody[i], SECOND_BUZZER_PIN, dofenschmirtz_melody[i] * 1.5, note_duration);
       }
 
-      while (!stopPlaying) {
-        for (ii = 0; ii < partyModeMelodyLength; ii++) {
-          if (stopPlaying) break;
-          int noteDuration = 1000 / currentPartyModeNoteDurations[ii];
-          playTwoNotes(BUZZER_PIN, currentPartyModeMelody[ii], SECOND_BUZZER_PIN, currentPartyModeMelody[ii] * 1.5, noteDuration);
+      while (!stop_playing) {
+        for (party_melody_index = 0; party_melody_index < party_mode_melody_length; party_melody_index++) {
+          if (stop_playing) break;
+
+          if (update_display_flag) {
+            update_display_flag = 0;
+            displayCurrentSongId(current_party_melody);
+          }
+
+          int note_duration = 1000 / current_party_mode_note_durations[party_melody_index];
+          playTwoNotes(BUZZER_PIN, current_party_mode_melody[party_melody_index], SECOND_BUZZER_PIN, current_party_mode_melody[party_melody_index] * 1.5, note_duration);
         }
       }
     } 
   }
+
+  delay(50);
 }

@@ -1,10 +1,9 @@
-#include <stdint.h>
 uint8_t BUZZER_PIN = 5;
 uint8_t SECOND_BUZZER_PIN = 18;
-uint8_t MODE_PIN = 34;
-uint8_t BTN_1 = 25;
-uint8_t BTN_2 = 26;
-uint8_t BTN_3 = 27;
-uint8_t BTN_4 = 35;
-uint8_t BTN_5 = 32;
-uint8_t BTN_6 = 33;
+uint8_t MODE_PIN = 15;
+uint8_t BTN_1_PIN = 25;
+uint8_t BTN_2_PIN = 26;
+uint8_t BTN_3_PIN = 27;
+uint8_t BTN_4_PIN = 19;
+uint8_t BTN_5_PIN = 32;
+uint8_t BTN_6_PIN = 33;

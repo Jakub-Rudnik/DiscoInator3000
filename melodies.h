@@ -1,76 +1,76 @@
-uint16_t NOTE_C3 = 131;
-uint16_t NOTE_D3 = 147;
-uint16_t NOTE_E3 = 165;
-uint16_t NOTE_F3 = 175;
-uint16_t NOTE_G3 = 196;
-uint16_t NOTE_A3 = 220;
-uint16_t NOTE_B3 = 247;
-uint16_t NOTE_C4 = 262;
-uint16_t NOTE_D4 = 294;
-uint16_t NOTE_D4S = 311;
-uint16_t NOTE_E4 = 330;
-uint16_t NOTE_F4 = 350;
-uint16_t NOTE_G4 = 392;
-uint16_t NOTE_G4S = 415;
-uint16_t NOTE_A4 = 440;
-uint16_t NOTE_A4S = 466;
-uint16_t NOTE_C5 = 523;
-uint16_t NOTE_C5S = 554;
-uint16_t NOTE_F5 = 698;
-uint16_t REST = 0;
+uint16_t note_c3 = 131;
+uint16_t note_d3 = 147;
+uint16_t note_e3 = 165;
+uint16_t note_f3 = 175;
+uint16_t note_g3 = 196;
+uint16_t note_a3 = 220;
+uint16_t note_b3 = 247;
+uint16_t note_c4 = 262;
+uint16_t note_d4 = 294;
+uint16_t note_d4s = 311;
+uint16_t note_e4 = 330;
+uint16_t note_f4 = 350;
+uint16_t note_g4 = 392;
+uint16_t note_g4s = 415;
+uint16_t note_a4 = 440;
+uint16_t note_a4s = 466;
+uint16_t note_c5 = 523;
+uint16_t note_c5s = 554;
+uint16_t note_f5 = 698;
+uint16_t rest = 0;
 
 //-----------------------------------DOOFENSHMIRTZ JINGLE-----------------------------------
-uint16_t dofenschmirtsMelody[] = {
-  NOTE_C4, NOTE_A3, NOTE_C4, REST,
-  NOTE_E4, NOTE_C4, NOTE_E4, REST, 
-  NOTE_G4, REST, NOTE_G4, REST, NOTE_G4, REST, NOTE_G4
+uint16_t dofenschmirtz_melody[] = {
+  note_c4, note_a3, note_c4, rest,
+  note_e4, note_c4, note_e4, rest, 
+  note_g4, rest, note_g4, rest, note_g4, rest, note_g4
 };
 
-uint8_t dofenschmirtzNoteDurations[] = {
+uint8_t dofenschmirtz_note_durations[] = {
   6, 6, 6, 8,
   6, 6, 6, 8,
   6, 6, 8, 16, 4, 16, 2
 };
 
 //-----------------------------------THE LICK-----------------------------------
-uint16_t lickMelody[] = {
-  NOTE_A3, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_F4,
-  REST, NOTE_C4, NOTE_D4, REST
+uint16_t lick_melody[] = {
+  note_a3, note_d4, note_e4, note_f4, note_g4, note_f4,
+  rest, note_c4, note_d4, rest
 };
 
-uint8_t lickNoteDurations[] = {
+uint8_t lick_note_durations[] = {
   4, 4, 4, 4, 4, 2,
   8, 2, 2, 1
 };
 
 //-----------------------------------WLAZŁ KOTEK NA PŁOTEK-----------------------------------
-uint16_t catMelody[] = {
-  NOTE_G4, NOTE_E4, REST, NOTE_E4, NOTE_F4, NOTE_D4, REST, NOTE_D4, NOTE_C4, NOTE_E4, NOTE_G4, REST,
-  NOTE_G4, NOTE_E4, REST, NOTE_E4, NOTE_F4, NOTE_D4, REST, NOTE_D4, NOTE_C4, NOTE_E4, NOTE_C4, REST
+uint16_t cat_melody[] = {
+  note_g4, note_e4, rest, note_e4, note_f4, note_d4, rest, note_d4, note_c4, note_e4, note_g4, rest,
+  note_g4, note_e4, rest, note_e4, note_f4, note_d4, rest, note_d4, note_c4, note_e4, note_c4, rest
 };
 
-uint8_t catNoteDurations[] = {
+uint8_t cat_note_durations[] = {
   2, 2, 16, 2, 2, 2, 16, 2, 4, 4, 2, 2,
   2, 2, 16, 2, 2, 2, 16, 2, 4, 4, 2, 2
 };
 
 //-----------------------------------TWINKLE TWINKLE LITTLE STAR-----------------------------------
-uint16_t starMelody[] = {
+uint16_t star_melody[] = {
   //1 bar
-  NOTE_C4, REST, NOTE_C4, REST, NOTE_G4, REST, NOTE_G4, REST, NOTE_A4, REST, NOTE_A4, REST, NOTE_G4, REST,
+  note_c4, rest, note_c4, rest, note_g4, rest, note_g4, rest, note_a4, rest, note_a4, rest, note_g4, rest,
   //2 bar
-  NOTE_F4, REST, NOTE_F4, REST, NOTE_E4, REST, NOTE_E4, REST, NOTE_D4, REST, NOTE_D4, REST, NOTE_C4, REST,
+  note_f4, rest, note_f4, rest, note_e4, rest, note_e4, rest, note_d4, rest, note_d4, rest, note_c4, rest,
   //3 bar
-  NOTE_G4, REST, NOTE_G4, REST, NOTE_F4, REST, NOTE_F4, REST, NOTE_E4, REST, NOTE_E4, REST, NOTE_D4, REST,
+  note_g4, rest, note_g4, rest, note_f4, rest, note_f4, rest, note_e4, rest, note_e4, rest, note_d4, rest,
   //4bar - same as 3
-  NOTE_G4, REST, NOTE_G4, REST, NOTE_F4, REST, NOTE_F4, REST, NOTE_E4, REST, NOTE_E4, REST, NOTE_D4, REST,
+  note_g4, rest, note_g4, rest, note_f4, rest, note_f4, rest, note_e4, rest, note_e4, rest, note_d4, rest,
   //5 bar - same as 1
-  NOTE_C4, REST, NOTE_C4, REST, NOTE_G4, REST, NOTE_G4, REST, NOTE_A4, REST, NOTE_A4, REST, NOTE_G4, REST,
+  note_c4, rest, note_c4, rest, note_g4, rest, note_g4, rest, note_a4, rest, note_a4, rest, note_g4, rest,
   //6 bar - same as 2
-  NOTE_F4, REST, NOTE_F4, REST, NOTE_E4, REST, NOTE_E4, REST, NOTE_D4, REST, NOTE_D4, REST, NOTE_C4, REST,
+  note_f4, rest, note_f4, rest, note_e4, rest, note_e4, rest, note_d4, rest, note_d4, rest, note_c4, rest,
 };
 
-uint8_t starNoteDurations[] = {
+uint8_t star_note_durations[] = {
   2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 1, 16,
   2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 1, 16,
   2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 2, 16, 1, 16,
@@ -80,19 +80,19 @@ uint8_t starNoteDurations[] = {
 };
 
 //-----------------------------------RICK ROLL-----------------------------------
-uint16_t rickMelody[] = {
-  NOTE_G3, NOTE_A3, NOTE_C4, NOTE_A3,
-  NOTE_E4, REST, NOTE_E4, REST, NOTE_D4, REST,
+uint16_t rick_melody[] = {
+  note_g3, note_a3, note_c4, note_a3,
+  note_e4, rest, note_e4, rest, note_d4, rest,
   //variation #1
-  NOTE_G3, NOTE_A3, NOTE_C4, NOTE_A3,
-  NOTE_D4, REST, NOTE_D4, REST, NOTE_C4, REST,
+  note_g3, note_a3, note_c4, note_a3,
+  note_d4, rest, note_d4, rest, note_c4, rest,
   //variation #2
-  NOTE_G3, NOTE_A3, NOTE_C4, NOTE_A3,
-  NOTE_C4, REST, NOTE_D4, REST, 
-  NOTE_B3, NOTE_A3, NOTE_G3, REST, NOTE_G3, NOTE_D4, REST, NOTE_C4, REST
+  note_g3, note_a3, note_c4, note_a3,
+  note_c4, rest, note_d4, rest, 
+  note_b3, note_a3, note_g3, rest, note_g3, note_d4, rest, note_c4, rest
 };
 
-uint8_t rickNoteDurations[] = {
+uint8_t rick_note_durations[] = {
   8, 8, 8, 8,
   3, 16, 6, 8, 2, 3,
   //variation #1
@@ -105,27 +105,27 @@ uint8_t rickNoteDurations[] = {
 };
 
 //-----------------------------------SEVEN NATION ARMY-----------------------------------
-uint16_t sevenNationMelody[] = {
-  NOTE_E4, REST, NOTE_E4, REST, NOTE_G4, REST, NOTE_E4, REST, NOTE_D4, REST, NOTE_C4, REST, NOTE_B3, REST,
-  NOTE_E4, REST, NOTE_E4, REST, NOTE_G4, REST, NOTE_E4, REST, NOTE_D4, REST, NOTE_C4, REST, NOTE_D4, REST, NOTE_C4, REST, NOTE_B3, REST
+uint16_t seven_nation_melody[] = {
+  note_e4, rest, note_e4, rest, note_g4, rest, note_e4, rest, note_d4, rest, note_c4, rest, note_b3, rest,
+  note_e4, rest, note_e4, rest, note_g4, rest, note_e4, rest, note_d4, rest, note_c4, rest, note_d4, rest, note_c4, rest, note_b3, rest
 };
 
-uint8_t sevenNationNoteDurations[] = {
+uint8_t seven_nation_note_durations[] = {
   2, 16, 4, 16, 4, 16, 4, 16, 4, 16, 1, 16, 1, 6,
   2, 16, 4, 16, 4, 16, 4, 16, 4, 16, 4, 16, 4, 16, 4, 16, 1, 6
 };
 
 //-----------------------------------CRAZY FROG-----------------------------------
-uint16_t crazyFrogMelody[] = {
+uint16_t crazy_frog_melody[] = {
   //1 bar
-  NOTE_F4, REST, NOTE_G4S, REST, NOTE_F4, REST, NOTE_F4, NOTE_A4S, REST, NOTE_F4, REST, NOTE_D4S, REST,
+  note_f4, rest, note_g4s, rest, note_f4, rest, note_f4, note_a4s, rest, note_f4, rest, note_d4s, rest,
   //2 bar
-  NOTE_F4, REST, NOTE_C5, REST, NOTE_F4, REST, NOTE_F4, NOTE_C5S, REST, NOTE_C5, REST, NOTE_G4S, REST,
+  note_f4, rest, note_c5, rest, note_f4, rest, note_f4, note_c5s, rest, note_c5, rest, note_g4s, rest,
   //3 bar
-  NOTE_F4, REST, NOTE_C5, REST, NOTE_F5, REST, NOTE_F4, NOTE_D4S, REST, NOTE_D4S, REST, NOTE_C4, REST, NOTE_G4, REST, NOTE_F4, REST, REST
+  note_f4, rest, note_c5, rest, note_f5, rest, note_f4, note_d4s, rest, note_d4s, rest, note_c4, rest, note_g4, rest, note_f4, rest, rest
 };
 
-uint8_t crazyFrogNoteDurations[] = {
+uint8_t crazy_frog_note_durations[] = {
   //1 bar
   3, 8, 4, 16, 5, 16, 6, 5, 16, 5, 16, 5, 16,
   //2 bar
