@@ -91,8 +91,6 @@ void loop() {
     stop_playing = 0;
   }
 
-  Serial.println(stop_playing, DEC);
-
   switchNormalModeMelody(current_normal_melody);
   switchPartyModeMelody(current_party_melody);
 
@@ -125,7 +123,7 @@ void loop() {
       for (int i = 0; i < sizeof(dofenschmirtz_melody) / sizeof(dofenschmirtz_melody[0]); i++) {
         if (stop_playing) break;
         int note_duration = 1000 / dofenschmirtz_note_durations[i];
-        playTwoNotes(BUZZER_PIN, dofenschmirtz_melody[i], SECOND_BUZZER_PIN, dofenschmirtz_melody[i] * 1.5, note_duration);
+        playTwoNotes(BUZZER_PIN, dofenschmirtz_melody[i], SECOND_BUZZER_PIN, dofenschmirt_melody[i] * 1.5, note_duration);
       }
 
       while (!stop_playing) {
