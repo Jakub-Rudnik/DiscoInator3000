@@ -1,9 +1,6 @@
 #include "pinout.h"
 #include "playNotes.h"
 #include "melodies.h"
-// #include "WiFi.h"
-// #include <WebServer.h>
-// #include <ArduinoJson.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -13,50 +10,71 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 #include "utils.h"
-// const char* ssid = "UPC6874093";
-// const char* password = "Snesxj6runcf";
-
-// WebServer server(80);
-
-// void handleRoot() {
-//   server.send(200, "text/plain", "Ready");
-// }
-
-// void changeSound() {
-//     String body = server.arg("plain");
-
-//     JsonDocument* doc = new JsonDocument();
-//     DeserializationError error = deserializeJson(*doc, body);
-
-//     if (error) {
-//       Serial.print("deserializeJson() failed: ");
-//       Serial.println(error.c_str());
-//       server.send(400, "application/json", "{\"message\":\"Invalid JSON\"}");
-//       return;
-//     }
-
-//     // int songId = (*doc)["sound-id"];
-//     // currentSongId = songId;
-//     // Serial.println("Name: " + String(songId));
-
-//     server.send(200, "application/json", "{\"message\":\"Data received successfully\"}");
-// }
 
 void IRAM_ATTR changeMode() {
   stopPlaying = 1;
 }
 
+uint8_t currentNormalMelody = 0;
+uint8_t i = 0;
+uint8_t ii = 0;
+uint8_t currentPartyMelody = 0;
+
+void IRAM_ATTR changeToSong1() {
+  currentNormalMelody = 0;
+  i = 0;
+  switchNormalModeMelody(currentNormalMelody);
+}
+
+void IRAM_ATTR changeToSong2() {
+  currentNormalMelody = 1;
+  i = 0;
+  switchNormalModeMelody(currentNormalMelody);
+}
+
+void IRAM_ATTR changeToSong3() {
+  currentNormalMelody = 2;
+  i = 0;
+  switchNormalModeMelody(currentNormalMelody);
+}
+
+void IRAM_ATTR changeToSong4() {
+  currentPartyMelody = 0;
+  ii = 0;
+  switchPartyModeMelody(currentPartyMelody);
+}
+
+void IRAM_ATTR changeToSong5() {
+  currentPartyMelody = 1;
+  ii = 0;
+  switchPartyModeMelody(currentPartyMelody);
+}
+
+void IRAM_ATTR changeToSong6() {
+  currentPartyMelody = 2;
+  ii = 0;
+  switchPartyModeMelody(currentPartyMelody);
+}
+
 void setup() {
   Serial.begin(9600);
-  // WiFi.softAP("ESP32");
-  // server.on("/", handleRoot);
-  // server.on("/change-sound", HTTP_POST, changeSound);
-  // server.begin();
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(SECOND_BUZZER_PIN, OUTPUT);
   pinMode(MODE_PIN, INPUT_PULLDOWN);
+  pinMode(BTN_1, INPUT_PULLUP);
+  pinMode(BTN_2, INPUT_PULLUP);
+  pinMode(BTN_3, INPUT_PULLUP);
+  pinMode(BTN_4, INPUT_PULLUP);
+  pinMode(BTN_5, INPUT_PULLUP);
+  pinMode(BTN_6, INPUT_PULLUP);
 
   attachInterrupt(MODE_PIN, changeMode, CHANGE);
+  attachInterrupt(BTN_1, changeToSong1, RISING);
+  attachInterrupt(BTN_2, changeToSong2, RISING);
+  attachInterrupt(BTN_3, changeToSong3, RISING);
+  attachInterrupt(BTN_4, changeToSong4, RISING);
+  attachInterrupt(BTN_5, changeToSong5, RISING);
+  attachInterrupt(BTN_6, changeToSong6, RISING);
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
   { // Address 0x3D for 128x64
@@ -67,22 +85,16 @@ void setup() {
 
   display.clearDisplay();
   display.setTextColor(WHITE);
-  // display.setTextSize(1);
-  // display.setCursor(0, 0);
-  // display.print("Tryb: ");
 }
 
 int lastMode = 1;
-void loop() {
-  // if (WiFi.status() != WL_CONNECTED) {
-  //   connectWiFi();
-  // }
-  // server.handleClient();
-  
-  switchNormalModeMelody(2);
-  switchPartyModeMelody(2);
 
+void loop() {  
   stopPlaying = 0;
+
+  switchNormalModeMelody(currentNormalMelody);
+  switchPartyModeMelody(currentPartyMelody);
+
   int currentMode = digitalRead(MODE_PIN) == HIGH;
   
   if (currentMode != lastMode)
@@ -93,7 +105,7 @@ void loop() {
       displayNormal();
 
       while (!stopPlaying) {
-        for (int i = 0; i < normalModeMelodyLength; i++) {
+        for (i = 0; i < normalModeMelodyLength; i++) {
           if (stopPlaying) break;
           int noteDuration = 1000 / currentNormalModeNoteDurations[i];
           playTwoNotes(BUZZER_PIN, currentNormalModeMelody[i], SECOND_BUZZER_PIN, currentNormalModeMelody[i] * 1.5, noteDuration);
@@ -110,28 +122,12 @@ void loop() {
       }
 
       while (!stopPlaying) {
-        for (int i = 0; i < partyModeMelodyLength; i++) {
+        for (ii = 0; ii < partyModeMelodyLength; ii++) {
           if (stopPlaying) break;
-          int noteDuration = 1000 / currentPartyModeNoteDurations[i];
-          playTwoNotes(BUZZER_PIN, currentPartyModeMelody[i], SECOND_BUZZER_PIN, currentPartyModeMelody[i] * 1.5, noteDuration);
+          int noteDuration = 1000 / currentPartyModeNoteDurations[ii];
+          playTwoNotes(BUZZER_PIN, currentPartyModeMelody[ii], SECOND_BUZZER_PIN, currentPartyModeMelody[ii] * 1.5, noteDuration);
         }
       }
     } 
   }
 }
-
-// void connectWiFi() {
-//   WiFi.mode(WIFI_OFF);
-//   delay(1000);
-//   WiFi.mode(WIFI_STA);
-//   WiFi.begin(ssid,password);
-//   Serial.println("Connecting to WIFi");
-
-//   while (WiFi.status() != WL_CONNECTED) {
-//     delay(500);
-//     Serial.print(".");
-//   }
-
-//   Serial.print("connected to :"); Serial.println(ssid);
-//   Serial.print("IP address : "); Serial.println(WiFi.localIP());
-// }
